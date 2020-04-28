@@ -1,0 +1,301 @@
+while communicate with database we have to convert java calls into database specipic calls and database calls into java calls for this driver software is reqiured.
+
+In the market thousands of drivers are available but based on functionality and architecture all drivers are divided into 4 types
+
+1. type -1 driver
+	jdbc-odbc bridge driver (or) bridge driver
+2. type -2 driver
+	native api partly java driver (or) native driver
+3. type -3 driver
+	all java net protocol driver (or) network protocol driver (or) middleware driver
+4. type -4 driver
+	all java native protocol driver (or) pure java driver (or) thin driver
+
+Note : prograss data direct software company introduced type -5 driver
+it is not industry standard driver
+
+TYPE -1 DRIVER
+-----------------------
+
+JAVA APP'S(JDBC)
+
+TYPE -1 DRIVER(it is convert java calls into odbc calls)
+
+ODBC DRIVER
+
+DATABASE
+
+----> jdbc-odbc bridge driver or bridge driver
+----> this driver provided by sun micro system  as part of jdk
+----> internally type-1 driver supports odbc drivers to convert  java calls into odbc calls .
+----> type -1 driver convert java calls into odbc calls, odbc driver convert odbc calls into database specific calls.
+---->  type -1 driver act as bridge between jdbc & odbc 
+
+advantages
+-----------------
+1. we are not required to install because it is available as the part of jdk
+2. this driver won't communicate with database directly hence it is  database independent driver.
+3. it is very easy to use and maintain.
+
+limitations
+---------------
+1. it is slowest driver among all drivers(snail driver) bc'z first it will converts jdbc calls into odbc calls and odbc driver convert odbc calls into specific database calls. 
+2. it is ploteform dependent driver(it runs windows machine only)
+3. this driver support until 1.7 java version only.
+
+WORKING WITH TYPE -1 DRIVER
+----------------------------------------------------
+
+driver :- sun.jdbc.odbc.JdbcOdbcDriver
+url :- jdbc:odbc:dsn(oracledsn)
+
+db user_name : system
+db_password : 12345
+
+query : select * from emp;
+
+Note : it is support upto java 7 version and windows xp os, not support java8 version onwords and windows 7,8,8.1,10 versions.
+
+type -1 driver not atall recommended to use any where....
+
+example :
+
+import java.sql.*;	basic package
+import javax.sql.*;	adv package
+
+class Type1DriverDemo
+{
+	public static void main(String[] args) throws Exception
+	{
+	Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+	Connection con=DriverManager.getConnection("jdbc:odbc:oracledns","system","12345");
+
+Statement st=con.createStatement();
+ResultSet rs=st.executeQuery("select * from emp");
+while(rs.next())
+	{
+	sop(rs.getInt(1)+"\t"+rs.getString(2)+"\t"+rs.getInt(3));
+	}
+	con.close();
+	}
+}
+
+
+TYPE -2 DRIVER
+==============
+java app's(jdbc)
+
+type -2 driver( native API partly java driver)
+		
+database vendar
+specific native library
+
+database
+
+it is also known as native API partly java driver
+
+type -2 driver exactly same as type -1 driver except that odbc driver is replased with database vender specific native libraries
+
+native libraries means the set of functions written in non java mostly(c/c++)
+
+we have to install vender provieded native libraries on the client machine
+ 
+type -2 driver convert jdbc calls into vender specific native library calls which can be hundastandable directly database engine
+
+advantages
+-----------------
+
+1. when compared with type -1 driver performance is high because it required only one level conversion from jdbc to native library calls 
+
+2. no need of arranging odbc driver
+3. when compared with type -1 driver, portabolity is more because type -1 driver is applicable only for windows machines
+
+limitstions
+---------------
+it is database dependent driver, because it internally uses database specific native libraries hense migrating from one database to another database will become difficult
+
+it is platform dependent driver
+
+we required to install native libraries on the client machine
+
+there is no guarentee every database vender will provided these drivers 
+[oracle people provided but Mysql people won't]
+
+Note:- the only driver which is both platform and database dependent is type -2 driver it is not recommended to use.
+
+oracle people provided type -2 driver
+-----------------------------------------------------
+java app's(jdbc)  
+
+oci driver
+oci libraries
+oracle database
+
+OCI(oracle calls Interface) driver is type -2 driver provided by Oracle
+
+OCI driver internally uses OCI libraries to communicate with database
+
+OCI libraries contain c-language functions
+
+OCI driver and corresponding OCI libraries are available in the following jar file hence we have to place this jar file in the classpath
+
+Ojdbc14.jar	oracle 10g(internally uses java 1.4 version)
+Ojdbc6. jar	oracle 11g(internally uses java 6 version)
+Ojdbc7. jar	oracle 12c(internally uses java 7 version)
+
+WORKING WITH TYPE -2 DRIVER
+---------------------------------------------------
+
+requirements
+1. ojdbc6.jar file and set classpath
+2.driver : oracle.jdbc.driver.OracleDriver
+	oracle.jdbc.OracleDriver
+3. jdbc url : jdbc:oracle:oci8:@XE   ---- Oracle 8
+	 jdbc:oracle:oci:@XE
+
+there are two ways to identify the System ID
+
+1. sql>select * from global_name;
+	XE|oracl|oracle1
+2. tnsnames ora file
+
+example :
+import java.sql.*;	basic package
+import javax.sql.*;	adv package
+
+class Type2DriverDemo
+{
+	public static void main(String[] args) throws Exception
+	{
+	Class.forName("oracle.jdbc.OracleDriver");
+	Connection con=DriverManager.getConnection("jdbc:oracle:oci:@xe","system","12345");
+
+Statement st=con.createStatement();
+ResultSet rs=st.executeQuery("select * from emp");
+while(rs.next())
+	{
+	sop(rs.getInt(1)+"\t"+rs.getString(2)+"\t"+rs.getInt(3));
+	}
+	con.close();
+	}
+}
+
+TYPE -3 Driver
+---------------------
+
+java appl's (jdbc)
+
+type -3 driver(all java net protocal driver) middle ware driver
+
+middle ware server (IDS server)
+
+database
+
+
+install IDS server
+create dns for type- 3 driver at system dns
+set ids.jdbc.IDSDriver in the class path
+ 
+driver : ids.sql.IDSDriver
+jdbc url : jdbc:ids://localhost:12/comm?dsn=systemdsnname(oracledsn)
+              Ex : jdbc:ids://localhost:12/comm?dsn=dsntype3driver
+db_uname :system
+db_ password :12345
+
+example 
+import java.sql.*;
+import javax.sql.*;
+class TypeThreeDriver
+{
+	public static void main(String[] args) throws Exception
+	{
+	Class.forName("ids.sql.IDSDriver");
+	Connection con=DriverManager.getConnection("jdbc:ids://localhost:12/comm?dsn=dsntype3driver","system","12345");
+
+Statement st=con.createStatement();
+ResultSet rs=st.executeQuery("select * from sahasra");
+while(rs.next())
+	{
+	System.out.println(rs.getInt(1)+"\t"+rs.getString(2)+"\t"+rs.getInt(3));
+	}
+	con.close();
+	}
+}
+
+TYPE - 4 DRIVER
+
+java application
+jdbc
+
+type -4 driver
+
+database
+
+---> it is pure java driver (or) native protocal driver (or) thin driver	 
+---> this driver uses database specific protocals to communicate with database.
+---> it is converts JDBC calls into database specific calls directly
+--->  it is developed only in java and hence it is also known as pure java driver because of this it is platform independent driver
+---> this won't require any ODBC driver or native libraries at client side and hence it is called thin driver
+
+advantages
+-----------------
+1. performance is more high
+2. it is platform independent driver
+3. it won't  required ODBC driver, native libraries,middleware server
+
+limitations
+
+1. it is database dependent driver because it is communicates with database directly
+
+ex : thin driver for Oracle
+       connector/j for Mysql
+
+WORKING WITH TYPE -4 DRIVER
+---------------------------------------------------
+
+driver : oracle.jdbc.driver.OracleDriver
+url      : jdbc:oracle:thin:@localhost:1521:xe
+db u_name : system
+db u_password : 12345
+
+query : select * from emp;
+
+example :
+
+import java.sql.*;	
+import javax.sql.*;	
+
+class Type4DriverDemo
+{
+	public static void main(String[] args) throws Exception
+	{
+	Class.forName("oracle.jdbc.driver.OracleDriver");
+	Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","system","12345");
+
+	Statement st=con.createStatement();
+	
+	ResultSet rs=st.executeQuery("select * from emp");
+	
+	while(rs.next())
+	{
+	sop(rs.getInt(1)+"\t"+rs.getString(2)+"\t"+rs.getInt(3));
+	}
+	con.close();
+	}
+}
+
+summary of all drivers 
+
+which driver should be used..?
+
+1.  if we are using only one type of database in our application then it is recommended to use type- 4 driver
+
+Ex : stand alone applications & small scale web applications
+
+2. if we are using multiple types of databases in our applications then type- 3 driver is recommended to use
+
+Ex : large scale web applications , enterprise applications
+
+3.if type-3 and type-4 drivers are not available then only we should go for type- 2 driver
+
+4. if no other driver is available then we should go for type-1 driver

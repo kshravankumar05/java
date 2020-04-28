@@ -1,0 +1,243 @@
+Layout Managers:
+The Layout Managers are used to arrange components in a particular manner. Layout Manager is an interface that is implemented by all the classes of layout managers. There are
+1.	java.awt.BorderLayout
+2.	java.awt.FlowLayout
+3.	java.awt.GridLayout
+4.	java.awt.CardLayout
+5.	javax.swing.BoxLayout
+
+Border Layout:
+=============
+The Border Layout is used to arrange the components in five regions: north, south, east, west and center. Each region (area) may contain one component only. It is the default layout of frame or window. The Border Layout provides five constants for each region:
+1.	public static final int NORTH
+2.	public static final int SOUTH
+3.	public static final int EAST
+4.	public static final int WEST
+5.	public static final int CENTER
+Constructors : 
+============
+•	BorderLayout(): creates a border layout but with no gaps between the components.
+•	JBorderLayout(int hgap, int vgap): creates a border layout with the given horizontal and vertical gaps between the components.
+
+example :
+	import java.awt.*;  
+	import javax.swing.*;  
+	  
+	public class Border {  
+	JFrame f;  
+		Border()
+			{  
+			f=new JFrame();  
+      
+			JButton b1=new JButton("aaa");  
+			JButton b2=new JButton("bbb");  
+			JButton b3=new JButton("ccc");  
+			JButton b4=new JButton("ddd");  
+			JButton b5=new JButton("eee");  
+	      
+	    f.add(b1,BorderLayout.NORTH);  
+	    f.add(b2,BorderLayout.SOUTH);  
+	    f.add(b3,BorderLayout.EAST);  
+	    f.add(b4,BorderLayout.WEST);  
+	    f.add(b5,BorderLayout.CENTER); 
+	   
+	    f.setSize(300,300);  
+	    f.setVisible(true); 
+		
+	}  
+	public static void main(String[] args) 
+		{  
+	    new Border();  
+		}  
+	}  
+
+GridLayout
+==========
+The GridLayout is used to arrange the components in rectangular grid. One component is displayed in each rectangle.
+Constructors:
+1.	GridLayout(): creates a grid layout with one column per component in a row.
+2.	GridLayout(int rows, int columns): creates a grid layout with the given rows and columns but no gaps between the components.
+3.	GridLayout(int rows, int columns, int hgap, int vgap): creates a grid layout with the given rows and columns alongwith given horizontal and vertical gaps.
+example :
+	import java.awt.*;  
+	import javax.swing.*;  
+	  
+	public class Grid{  
+	JFrame f;  
+	Grid(){  
+	    f=new JFrame();  
+      
+	    JButton b1=new JButton("S_no");  
+	    JButton b2=new JButton("Name");  
+	    JButton b3=new JButton("Phone No");  
+	    JButton b4=new JButton("1");  
+	    JButton b5=new JButton("Chandu");  
+        JButton b6=new JButton("9492200343");  
+	    JButton b7=new JButton("2");  
+	    JButton b8=new JButton("Sidhu");  
+	    JButton b9=new JButton("8520860700");  
+	          
+	    f.add(b1);
+		f.add(b2);
+		f.add(b3);
+		f.add(b4);
+		f.add(b5);  
+	    f.add(b6);
+		f.add(b7);
+		f.add(b8);
+		f.add(b9);  
+
+		//f.setLayout(new t(GridLayou));
+	   // f.setLayout(new GridLayout(3,3));  
+		f.setLayout(new GridLayout(3,3,5,5));
+	      
+	    f.setSize(300,300);  
+	    f.setVisible(true);  
+	}  
+	public static void main(String[] args) {  
+	    new Grid();  
+	}  
+	}  
+
+FlowLayout
+===========
+The FlowLayout is used to arrange the components in a line, one after another (in a flow). It is the default layout of applet or panel.
+Fields of FlowLayout:
+1.	public static final int LEFT
+2.	public static final int RIGHT
+3.	public static final int CENTER
+4.	public static final int LEADING
+5.	public static final int TRAILING
+Constructors:
+1.	FlowLayout(): creates a flow layout with centered alignment and a default 5 unit horizontal and vertical gap.
+2.	FlowLayout(int align): creates a flow layout with the given alignment and a default 5 unit horizontal and vertical gap.
+3.	FlowLayout(int align, int hgap, int vgap): creates a flow layout with the given alignment and the given horizontal and vertical gap.
+example :
+	import java.awt.*;  
+	import javax.swing.*;  
+	  
+	public class Flow{  
+	JFrame f;  
+	Flow(){  
+	    f=new JFrame();  
+	      
+	    JButton b1=new JButton("1");  
+	    JButton b2=new JButton("2");  
+	    JButton b3=new JButton("3");  
+	    JButton b4=new JButton("4");  
+	    JButton b5=new JButton("5");  
+	              
+	    f.add(b1);f.add(b2);f.add(b3);f.add(b4);f.add(b5);  
+	      
+	    //f.setLayout(new FlowLayout(FlowLayout.LEFT));
+									 //setting flow layout of lift alignment 
+		//f.setLayout(new FlowLayout(FlowLayout.RIGHT));
+									 //setting flow layout of right alignment 
+		//f.setLayout(new FlowLayout(FlowLayout.CENTER));
+									 //setting flow layout of right alignment 
+		//f.setLayout(new FlowLayout(FlowLayout.LEADING));
+									 //setting flow layout of right alignment 
+		//f.setLayout(new FlowLayout(FlowLayout.TRAILING));
+									 //setting flow layout of right alignment 
+		f.setLayout(new FlowLayout(FlowLayout.RIGHT,5,5));
+									 //setting flow layout of right alignment */
+	    
+	  
+	    f.setSize(300,300);  
+	    f.setVisible(true);  
+	}  
+	public static void main(String[] args) {  
+	    new Flow();  
+	}  
+	}  
+
+BoxLayout:
+---------------
+The BoxLayout is used to arrange the components either vertically or horizontally. For this purpose, BoxLayout provides four constants. They are as follows:
+Note: BoxLayout class is found in javax.swing package.
+Fields of BoxLayout:
+1.	public static final int X_AXIS
+2.	public static final int Y_AXIS
+3.	public static final int LINE_AXIS
+4.	public static final int PAGE_AXIS
+Constructor:
+1.	BoxLayout(Container c, int axis): creates a box layout that arranges the components with the given axis.
+example:
+	import java.awt.*;  
+	import javax.swing.*;  
+	  
+	public class Boxe extends Frame
+		{  
+		Button buttons[];  
+			public Boxe ()
+			{  
+				buttons = new Button [5];  
+	    
+				for (int i = 0;i<5;i++) 
+						{  
+						buttons[i] = new Button ("Button " + (i + 1));  
+						add (buttons[i]);  
+						}  
+			//setLayout (new BoxLayout (this, BoxLayout.Y_AXIS));  
+			setLayout (new BoxLayout(this, BoxLayout.X_AXIS));
+			setSize(400,400);  
+			setVisible(true);  
+			}  
+	public static void main(String args[])
+			{  
+			Boxe b=new Boxe();  
+			}  
+	}  
+
+CardLayout 
+==========
+The CardLayout class manages the components in such a manner that only one component is visible at a time. It treats each component as a card that is why it is known as CardLayout.
+Constructors:
+1.	CardLayout(): creates a card layout with zero horizontal and vertical gap.
+2.	CardLayout(int hgap, int vgap): creates a card layout with the given horizontal and vertical gap.
+methods of CardLayout class:
+•	public void next(Container parent): is used to flip to the next card of the given container.
+•	public void previous(Container parent): is used to flip to the previous card of the given container.
+•	public void first(Container parent): is used to flip to the first card of the given container.
+•	public void last(Container parent): is used to flip to the last card of the given container.
+•	public void show(Container parent, String name): is used to flip to the specified card with the given name.
+
+example :
+	import java.awt.*;  
+	import java.awt.event.*;  
+  	import javax.swing.*;  
+  
+	public class Card extends JFrame implements ActionListener
+		{  
+			CardLayout card;  
+			JButton b1,b2,b3;  
+			Container c;  
+				Card()
+					{  
+          	        c=getContentPane();  
+					card=new CardLayout(40,30);  
+						//create CardLayout object with 40 hor space and 30 ver space  
+					c.setLayout(card);  
+	          
+					b1=new JButton("Apple");  
+					b2=new JButton("Boy");  
+					b3=new JButton("Cat");  
+					b1.addActionListener(this);  
+					b2.addActionListener(this);  
+					b3.addActionListener(this);  
+						  
+			        c.add("c",b1);c.add("c",b2);c.add("c",b3);  
+	                }  
+	    
+		public void actionPerformed(ActionEvent e) 
+			{  
+			card.next(c);  
+			}  
+	   public static void main(String[] args) 
+		   {  
+	        Card cl=new Card();  
+	        cl.setSize(400,400);  
+	        cl.setVisible(true);  
+	        cl.setDefaultCloseOperation(EXIT_ON_CLOSE);  
+			}  
+	}  
